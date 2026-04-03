@@ -2,7 +2,7 @@ import numpy as np
 from player import Player
 rand = np.random.default_rng(32)
 
-class game:
+class Game:
     '''
     For the moment, it is only a two-player game, one leader and one follower
     '''
