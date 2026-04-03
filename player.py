@@ -6,6 +6,7 @@ class Player:
         self.strategy = d_matrix
         self.transition_rates = q_matrices
         self.state = initial_state
+        self.time = 0
 
     def probability_array(self, array: np.ndarray) -> np.ndarray:
         '''
@@ -48,11 +49,12 @@ class Player:
     
     def take_step(self) -> tuple[int, float]:
         '''
-        Calls the functions to choose actions, find new state and get time for the step. Updates the state
+        Calls the functions to choose actions, find new state and get time for the step. Updates the state and time
         Returns the new state and the time taken for the step
         '''
         action = self.choose_action()
         new_state = self.choose_new_state(action)
         time = self.choose_time(action, new_state)
         self.state = new_state
+        self.time += time
         return new_state, time
