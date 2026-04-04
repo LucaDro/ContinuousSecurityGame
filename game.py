@@ -23,17 +23,24 @@ class Game:
         else:
             return False
 
-    def play_game(self) -> int:
+    def play_game(self, step_cap = 100, debug = False) -> int:
         '''
         Plays the game step by step, checking the capture condition at every step. 
         Returns step at which the leader captured the follower
         '''
+        if debug == True:
+            print(f"The leader starts at state {self.leader.state} and the follower starts at state {self.follower.state}")
         capture = False
         step = 0
         while not capture:
             step += 1
             self.leader.take_step()
+            print(f"the leader end up at state {self.leader.state} at time {self.leader.time}")
             self.follower.take_step()
-            self.check_capture()
+            print(f"the follower end up at state {self.follower.state} at time {self.follower.time}")
+            capture = self.check_capture()
+            if capture:
+                print(f"The game ends at step {step}")
+            print("\n")
         return step
 

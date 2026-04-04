@@ -19,4 +19,4 @@ follower = Player(d_2, np.array([q_21, q_22]), 4)
 
 game = Game(leader, follower)
 
-print(game.play_game())
+print(game.play_game(100, True))
