@@ -14,14 +14,15 @@ class Game:
     def check_capture(self) -> bool:
         '''
         Checks if the capture condition is fulfilled. 
-        The leader and the follower need to be in the same state at the same state and the time needs to be within a second of each other.
+        The leader and the follower need to be in the same state at the same time.
         returns true or false
         '''
         #Horrible if statement but it works
-        if self.leader.state == self.follower.state and self.leader.time - 1 <= self.follower.time and self.leader.time + 1 >= self.follower.time:
-            return True
-        else:
-            return False
+        if self.leader.state == self.follower.state:
+            if (self.leader.time <= self.follower.time and self.leader.time >= self.follower.previous_time) or (self.follower.time <= self.leader.time and self.follower.time >= self.leader.previous_time):
+                return True
+        return False
+
 
     def play_game(self, step_cap = 100, debug = False) -> int:
         '''

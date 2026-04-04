@@ -6,6 +6,7 @@ class Player:
         self.strategy = d_matrix
         self.transition_rates = q_matrices
         self.state = initial_state
+        self.previous_time = 0
         self.time = 0
 
     def probability_array(self, array: np.ndarray) -> np.ndarray:
@@ -56,5 +57,6 @@ class Player:
         new_state = self.choose_new_state(action)
         time = self.choose_time(action, new_state)
         self.state = new_state
+        self.previous_time = self.time
         self.time += time
         return new_state, time
