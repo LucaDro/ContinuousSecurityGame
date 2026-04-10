@@ -1,3 +1,4 @@
+from matplotlib.pyplot import step
 import numpy as np
 from player import Player
 rand = np.random.default_rng(32)
@@ -24,7 +25,7 @@ class Game:
         return False
 
 
-    def play_game(self, step_cap = 100, debug = False) -> int:
+    def play_game(self, step_cap = 100, debug = False) -> int | None:
         '''
         Plays the game step by step, checking the capture condition at every step. 
         Returns step at which the leader captured the follower
@@ -33,15 +34,20 @@ class Game:
             print(f"The leader starts at state {self.leader.state} and the follower starts at state {self.follower.state}")
         capture = False
         step = 0
-        while not capture:
+        while not capture and step < step_cap: #step_cap wasn't used before
             step += 1
             self.leader.take_step()
-            print(f"the leader end up at state {self.leader.state} at time {self.leader.time}")
+            if debug == True:
+                print(f"the leader end up at state {self.leader.state} at time {self.leader.time}")
             self.follower.take_step()
-            print(f"the follower end up at state {self.follower.state} at time {self.follower.time}")
+            if debug == True:
+                print(f"the follower end up at state {self.follower.state} at time {self.follower.time}")
             capture = self.check_capture()
             if capture:
-                print(f"The game ends at step {step}")
-            print("\n")
-        return step
-
+                if debug == True:
+                    print(f"The game ends at step {step}")
+            if debug == True:
+                print("\n")
+        if capture:
+            return step
+        return None
