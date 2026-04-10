@@ -55,3 +55,41 @@ class Game:
         if capture:
             return leader_step, follower_step
         return None 
+    
+    def repeat_games(self, num_games: int, step_cap = 100) -> tuple[int, int]:
+        """
+        Plays multiple games and returns the average step count of all players excluding the games where they exceeded the step_cap.
+        """
+        start_leader = self.leader.copy()
+        start_follower = self.follower.copy()
+        leader_steps = []
+        follower_steps = []
+        steps = self.play_game(step_cap, True)
+        if steps is not None:
+                leader_step = steps[0]
+                follower_step = steps[1]
+        leader_steps.append(leader_step)
+        follower_steps.append(follower_step)
+        for i in range(num_games):
+            self.leader = start_leader.copy()
+            self.follower = start_follower.copy()
+            steps = self.play_game(step_cap)
+            if steps is not None:
+                leader_step = steps[0]
+                follower_step = steps[1]
+            leader_steps.append(leader_step)
+            follower_steps.append(follower_step)
+        num_games_finished = 0
+        unfinished_games = 0
+        leader_average = 0
+        follower_average = 0
+        for idx in range(len(leader_steps)):
+            if leader_steps[idx] is not None:
+                num_games_finished += 1
+                leader_average += leader_steps[idx]
+                follower_average += follower_steps[idx]
+            else:
+                unfinished_games += 1
+        leader_average /= num_games_finished
+        follower_average /= num_games_finished
+        return leader_average, follower_average, unfinished_games

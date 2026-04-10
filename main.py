@@ -121,18 +121,18 @@ def main():
     follower_original = Player(d_2, np.array([q_21, q_22]), 4)
 
     game_original = Game(leader_original, follower_original)
-    steps_original = game_original.play_game(step_cap=100, debug=True)
+    leader_steps_original, follower_steps_original, unfinished_original = game_original.repeat_games(num_games=100, step_cap=100)
 
-    print("Original game finished in steps:", steps_original)
+    print(f"Original game: Leader had {leader_steps_original} steps on average, follower had {follower_steps_original}, step_cap was exceeded in {unfinished_original} games")
 
     print("\n--- Optimized leader strategy ---")
     leader_optimized = Player(best_d_1, np.array([q_11, q_12]), 2)
     follower_fixed = Player(d_2, np.array([q_21, q_22]), 4)
 
     game_optimized = Game(leader_optimized, follower_fixed)
-    steps_optimized = game_optimized.play_game(step_cap=100, debug=True)
+    leader_steps_optimized, follower_steps_optimized, unfinished_optimized = game_optimized.repeat_games(num_games=100, step_cap=100)
 
-    print("Optimized game finished in steps:", steps_optimized)
+    print(f"Optimized game: Leader had {leader_steps_optimized} steps on average, follower had {follower_steps_optimized}, step_cap was exceeded in {unfinished_optimized} games")
 
     print("\n--- Summary ---")
     print("Original leader cost:", leader_cost)

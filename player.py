@@ -10,6 +10,13 @@ class Player:
         self.time = 0
         self.n_states = q_matrices.shape[1]
 
+    def copy(self):
+        '''
+        Creates a copy of the player
+        '''
+        copy = Player(self.strategy.copy(), self.transition_rates.copy(), self.state)
+        return copy
+
     def probability_array(self, array: np.ndarray) -> np.ndarray:
         '''
         Takes an array and returns the array as probability
