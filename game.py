@@ -1,5 +1,6 @@
 from matplotlib.pyplot import step
 import numpy as np
+from math import sqrt
 from player import Player
 rand = np.random.default_rng(32)
 
@@ -79,6 +80,7 @@ class Game:
                 follower_step = steps[1]
             leader_steps.append(leader_step)
             follower_steps.append(follower_step)
+        # Calculate the mean steps
         num_games_finished = 0
         unfinished_games = 0
         leader_average = 0
@@ -92,4 +94,13 @@ class Game:
                 unfinished_games += 1
         leader_average /= num_games_finished
         follower_average /= num_games_finished
-        return leader_average, follower_average, unfinished_games
+        # Calculate the standard deviation of the steps
+        leader_variance = 0
+        follower_variance = 0
+        for idx in range(len(leader_steps)):
+            if leader_steps[idx] is not None:
+                leader_variance = (leader_steps[idx]-leader_average)**2
+                follower_variance = (follower_steps[idx]-follower_average)**2
+        leader_sd = sqrt(leader_variance)
+        follower_sd = sqrt(follower_variance)
+        return leader_average, follower_average, leader_sd, follower_sd, unfinished_games

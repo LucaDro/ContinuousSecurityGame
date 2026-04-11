@@ -130,7 +130,7 @@ def main():
     follower_fixed = Player(d_2, np.array([q_21, q_22]), 4)
 
     game_optimized = Game(leader_optimized, follower_fixed)
-    leader_steps_optimized, follower_steps_optimized, unfinished_optimized = game_optimized.repeat_games(num_games=100, step_cap=100)
+    leader_steps_optimized, follower_steps_optimized, leader_steps_sd, follower_steps_sd, unfinished_optimized = game_optimized.repeat_games(num_games=100, step_cap=100)
 
     print(f"Optimized game: Leader had {leader_steps_optimized} steps on average, follower had {follower_steps_optimized}, step_cap was exceeded in {unfinished_optimized} games")
 
